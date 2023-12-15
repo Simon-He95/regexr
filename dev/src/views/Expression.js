@@ -38,7 +38,6 @@ export default class Expression extends EventDispatcher {
 		this.lexer = new ExpressionLexer();
 		
 		this._initUI(el);
-		app.flavor.on("change", ()=> this._onFlavorChange());
 		this._onFlavorChange();
 	}
 	
@@ -84,10 +83,6 @@ export default class Expression extends EventDispatcher {
 	toggleFlag(s) {
 		let flags = this.flags, i = flags.indexOf(s);
 		this.flags = i>=0 ? flags.replace(s, "") : flags+s;
-	}
-	
-	showFlavors() {
-		app.tooltip.toggle.toggleOn("flavor", this.flavorEl, this.flavorBtn, true, -2)
 	}
 	
 	insert(str) {
@@ -172,11 +167,8 @@ export default class Expression extends EventDispatcher {
 		let flavorData = app.flavor.profiles.map((o)=>({id:o.id, label:o.label+" ("+(o.browser?"Browser":"Server")+")"}));
 		
 		this.flavorBtn = $.query("section.expression .button.flavor", el);
-		this.flavorEl = $.query("#library #tooltip-flavor");
 		this.flavorList = new List($.query("ul.list", this.flavorEl), {data:flavorData, template});
 		this.flavorList.on("change", ()=>this._onFlavorListChange());
-		this.flavorBtn.addEventListener("click", (evt) => this.showFlavors());
-		$.query(".icon.help", this.flavorEl).addEventListener("click", ()=> app.sidebar.goto("engine"));
 		
 		this.flagsBtn = $.query("section.expression .button.flags", el);
 		this.flagsEl = $.query("#library #tooltip-flags");
@@ -201,8 +193,6 @@ export default class Expression extends EventDispatcher {
 	
 	_onFlavorChange() {
 		let flavor = app.flavor, profile = flavor.profile;
-		this.flavorList.selected = profile.id;
-		$.query("> .label", this.flavorBtn).innerText = profile.label;
 		
 		let supported = Expression.FLAGS.split("").filter((n)=>!!profile.flags[n]);
 		let labels = Expression.FLAG_LABELS;

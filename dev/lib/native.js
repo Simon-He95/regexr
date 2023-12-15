@@ -22,19 +22,7 @@ window._native = function () {
 	};
 
 	var init = function init(zone, options) {
-		_options = _construct(options);
-
-		var jsonUrl = 'https://srv.buysellads.com/ads/' + zone + '.json?callback=_native_go';
-		if (_options['placement'] !== '') {
-			jsonUrl += '&segment=placement:' + _options['placement'];
-		}
-		if (_options['ignore'] === 'true') {
-			jsonUrl += '&ignore=yes';
-		}
-
-		var srv = document.createElement('script');
-		srv.src = jsonUrl;
-		document.getElementsByTagName('head')[0].appendChild(srv);
+		
 	};
 
 	var carbon = function carbon(e) {

@@ -108,12 +108,9 @@ export default class Tools extends EventDispatcher {
 			singleLine: true
 		}, "100%", "100%");
 
-		$.query(".help.icon", el).addEventListener("click", () => app.sidebar.goto(this._toolId));
-		
 		// TODO: evaluate this living here or in Replace:
 		editor.on("change", ()=> this._handleEditorChange());
 		
-		app.flavor.on("change", () => this._updateHighlights());
 		app.expression.on("change", () => this._updateHighlights());
 		
 		this.lexer = new SubstLexer();
@@ -129,7 +126,6 @@ export default class Tools extends EventDispatcher {
 	
 	_updateHighlights() {
 		if (!this.hasInput) { return; } // only for Replace & List
-		this.lexer.profile = app.flavor.profile;
 		let token = this.lexer.parse(this.editor.getValue());
 		this.highlighter.draw(token);
 		this.hover.token = token;

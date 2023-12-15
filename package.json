@@ -5,6 +5,9 @@
   "author": "Grant Skinner",
   "license": "GPL-3.0",
   "private": true,
+  "scripts": {
+    "dev":"gulp"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",

@@ -30,16 +30,16 @@
 	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 
 	<!-- icons -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?1">
-	<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png?1">
-	<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png?1">
-	<link rel="manifest" href="/assets/icons/site.webmanifest?1">
-	<link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg?1" color="#70b0e0">
-	<link rel="shortcut icon" href="/assets/icons/favicon.ico?1">
+	<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png?1">
+	<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png?1">
+	<link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png?1">
+	<link rel="manifest" href="./icons/site.webmanifest?1">
+	<link rel="mask-icon" href="./icons/safari-pinned-tab.svg?1" color="#70b0e0">
+	<link rel="shortcut icon" href="./icons/favicon.ico?1">
 	<meta name="apple-mobile-web-app-title" content="RegExr">
 	<meta name="application-name" content="RegExr">
 	<meta name="msapplication-TileColor" content="#70b0e0">
-	<meta name="msapplication-config" content="/assets/icons/browserconfig.xml">
+	<meta name="msapplication-config" content="./icons/browserconfig.xml">
 	<meta name="theme-color" content="#70b0e0">
 
 	<!-- social -->
@@ -67,103 +67,26 @@
 		<header class="header">
 			<svg class="icon logo inline"><use xlink:href="#RegExr"></use></svg>
 			<div class="settings">
-				<span class="name">Untitled Pattern</span>
-				<svg class="icon share"><use xlink:href="#share"><title>Pattern Settings</title></use></svg>
+				<span class="name">vscode regex match</span>
 				</div>
 			</ul>
 			<ul class="file">
-				<li class="save disabled"><span class="action">Save</span> <span class="savekey">(--)</span></li>
 				<li class="new">New</li>
 			</ul>
 			<ul class="etc">
 				<li class="button theme"><svg class="icon moon inline"><use xlink:href="#moon"><title>Dark UI</title></use></svg></li>
-				<li class="by">by <a href="http://gskinner.com">gskinner</a></li>
 				<li class="github"><a href="http://github.com/gskinner/regexr/">GitHub</a></li>
-				<li class="signin"><a>
-					<svg class="icon user inline"><use xlink:href="#user"></use></svg>
-					<span class="label">Sign In</span>
-				</a></li>
 			</ul>
 		</header>
 
 		<div class="app">
-			<aside class="sidebar">
-				<div class="full">
-					<header class="row">
-						<div class="backrow">
-							<svg class="icon back"><use xlink:href="#menu"></use></svg>
-							<h1 class="label">Menu</h1>
-						</div>
-						<svg class="small icon close"><use xlink:href="#close"><title>Minimize menu</title></use></svg>
-					</header>
-					<header class="search row">
-						<input type="text" placeholder="search">
-						<svg class="icon distractor anim-spin"><use xlink:href="#distractor"></use></svg>
-						<svg class="icon search"><use xlink:href="#search"></use></svg>
-					</header>
-					<ul class="list"></ul>
-					<div class="content">
-						RegExr is an online tool to <b>learn</b>, <b>build</b>, &amp; <b>test</b> Regular Expressions (RegEx / RegExp).
-						<hr>
-						<ul>
-							<li>Supports <b>JavaScript</b> &amp; <b>PHP/PCRE</b> RegEx.</li>
-							<li>Results update in <b>real-time</b> as you type.</li>
-							<li><b>Roll over</b> a match or expression for details.</li>
-							<li>Validate patterns with suites of <b>Tests</b>.</li>
-							<li><b>Save</b> &amp; share expressions with others.</li>
-							<li>Use <b>Tools</b> to explore your results.</li>
-							<li>Full <b>RegEx Reference</b> with help &amp; examples.</li>
-							<li><b>Undo</b> &amp; <b>Redo</b> with {{getCtrlKey()}}-Z / Y in editors.</li>
-							<li>Search for &amp; rate <b>Community Patterns</b>.</li>
-						</ul>
-					</div>
-					<div class="hello">
-						<div class="native-js">
-							<a href="#native_link#" class="native-flex">
-								<style>
-									.native-js {
-										background: linear-gradient(-30deg, #native_bg_color#E5, #native_bg_color#E5 45%, #native_bg_color# 45%) #fff;
-									}
-
-									.native-details {
-										color: #native_color# !important;
-									}
-
-									.native-details:hover {
-										color: #native_color_hover# !important;
-									}
-								</style>
-								<div class="native-main">
-									<img class="native-img" src="#native_logo#">
-									<div class="native-details">
-										<span class="native-company">Sponsored by #native_company#</span>
-										<span class="native-desc">#native_desc#</span>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="noad">
-							<b>Want to support RegExr?</b> Consider disabling your ad-blocker for this domain. We'll show a non-intrusive, dev-oriented ad in this area.
-						</div>
-					</div>
-				</div>
-
-				<div class="min">
-					<ul class="list"></ul>
-				</div>
-			</aside>
-
 			<div class="doc">
 				<div class="blocker"></div>
 				<section class="expression">
 					<header>
 						<h1>Expression</h1>
 						<div class="controlbar">
-							<div class="button flavor">
-								<svg class="icon"><use xlink:href="#code"></use></svg>
-								<span class="label">JavaScript</span>
-								<svg class="icon dropdown"><use xlink:href="#dropdown"></use></svg>
-							</div>
+					
 							<div class="button flags">
 								<svg class="icon"><use xlink:href="#flags"></use></svg>
 								<span class="label">Flags</span>
@@ -219,7 +142,6 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 						<svg class="small icon max"><use xlink:href="#close"><title>Toggle tools panel</title></use></svg>
 					</header>
 					<article>
-						<svg class="icon help"><use xlink:href="#help"></use></svg>
 						<div class="inputtool">
 							<div class="editor"></div>
 							<div class="result"></div>
@@ -237,15 +159,6 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 			<div class="content"></div>
 		</div>
 
-		<div id="tooltip-flavor">
-			<header>
-				<h1>RegEx Engine</h1>
-				<svg class="icon help"><use xlink:href="#help"></use></svg>
-			</header>
-			<hr>
-			<ul class="list"></ul>
-		</div>
-
 		<div id="tooltip-flags">
 			<header>
 				<h1>Expression Flags</h1>
@@ -257,38 +170,6 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 
 		<div id="tooltip-testtypes">
 			<ul class="list"></ul>
-		</div>
-
-		<div id="tooltip-signin">
-			<div class="signin">
-				<header>
-					<h1>Sign In</h1>
-					<svg class="icon help"><use xlink:href="#help"></use></svg>
-				</header>
-				<hr>
-				<div class="content">
-					Sign in to persist favorites &amp; patterns. Click the help icon above for info.
-					<br><br>
-					Any unsaved changes will be lost. Saved patterns &amp; favorites will be migrated to your account.
-				</div>
-				<hr>
-				<ul class="list"></ul>
-			</div>
-			<div class="signout">
-				<header>
-					<h1>Sign Out</h1>
-				</header>
-				<hr>
-				<div class="content">
-					You are currently signed in as <b class="username">--</b> via <b class="type">--</b>.
-					<br><br>
-					<span class="signoutbtn">Sign out.</span>
-				</div>
-			</div>
-			<div class="distract">
-				<svg class="icon distractor anim-spin"><use xlink:href="#distractor"></use></svg>
-				One moment...
-			</div>
 		</div>
 
 		<div id="cheatsheet">
@@ -327,13 +208,6 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 		</div>
 
 		<div id="community" class="community">
-			<header>
-				<div class="label name"></div>
-				<div>
-					<svg class="icon favorites"><use xlink:href="#favorites"><title>Favorite (add to My Patterns)</title></use></svg>
-					<svg class="icon share"><use xlink:href="#share"><title>Load & open pattern settings</title></use></svg>
-				</div>
-			</header>
 			<div class="actions list">
 				<div class="link row">
 					<svg class="icon link"><use xlink:href="#link"></use></svg>
@@ -436,7 +310,7 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 			<header>
 				<svg class="icon fail small"><use xlink:href="#close"><title>Failed</title></use></svg>
 				<svg class="icon pass small"><use xlink:href="#check"><title>Passed</title></use></svg>
-				<h1><input type="text" class="name" placeholder="Untitled Test"></input></h1>
+				<h1><input type="text" class="name" placeholder="vscode regex match"></input></h1>
 				<div class="button type">
 					<span class="label">Match all</span>
 					<svg class="icon dropdown"><use xlink:href="#dropdown"></use></svg>

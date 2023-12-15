@@ -28,7 +28,7 @@ import Server from "./net/Server";
 import Expression from "./views/Expression";
 import Text from "./views/Text";
 import Tools from "./views/Tools";
-import Sidebar from "./views/Sidebar";
+import app from "./app";
 import Account from "./views/Account";
 import Theme from "./views/Theme";
 
@@ -40,14 +40,17 @@ import RefCoverage from "./RefCoverage";
 import Prefs from "./helpers/Prefs";
 
 export default class RegExr extends EventDispatcher {
-	constructor () { super(); }
+	constructor() { super(); }
 
-	init(state, account, config={}) {
+	init(state, account, config = {}) {
 		this.prefs = new Prefs();
 		this.flavor = new Flavor();
 		this.reference = new Reference(reference_content, this.flavor, config);
 		this._migrateFavorites();
 		this._initUI();
+		const hEl = $.query(".header");
+		this.hNewBtn = $.query(".new", hEl);
+		this.hNewBtn.addEventListener('click', () => app.newDoc())
 
 		this.account.value = account;
 		if (state === false) {
@@ -67,7 +70,7 @@ export default class RegExr extends EventDispatcher {
 		if (params.engine) { this.flavor.value = params.engine; }
 		if (params.expression) { this.expression.value = params.expression; }
 		if (params.text) { this.text.value = params.text; }
-		if (params.tool) { this.tools.value = {id:params.tool, input:params.input}; }
+		if (params.tool) { this.tools.value = { id: params.tool, input: params.input }; }
 
 		window.onbeforeunload = (e) => this.unsaved ? "You have unsaved changes." : null;
 		this.resetUnsaved();
@@ -88,7 +91,7 @@ export default class RegExr extends EventDispatcher {
 		new RefCoverage();
 	}
 
-// getter / setters:
+	// getter / setters:
 	get state() {
 		console.log(this.text.mode);
 		let o = {
@@ -100,7 +103,7 @@ export default class RegExr extends EventDispatcher {
 			mode: this.text.mode,
 		};
 		// copy share values onto the pattern object:
-		return Utils.copy(this.share.value, o);
+		return {}
 	}
 
 	set state(o) {
@@ -111,18 +114,16 @@ export default class RegExr extends EventDispatcher {
 		this.text.tests = o.tests;
 		this.text.mode = o.mode;
 		this.tools.value = o.tool;
-		this.share.pattern = o;
 		this.resetUnsaved();
 	}
 
 	get hash() {
-		let share = this.share;
 		return Utils.getHashCode(
-			this.expression.value+"\t"
-			+ this.text.value+"\t"
-			+ this.flavor.value+"\t"
-			+ share.author+"\t" + share.name+"\t" + share.description+"\t" + share.keywords+"\t"
-			+ JSON.stringify(this.text.tests)+"\t"
+			this.expression.value + "\t"
+			+ this.text.value + "\t"
+			+ this.flavor.value + "\t"
+			+ share.author + "\t" + share.name + "\t" + share.description + "\t" + share.keywords + "\t"
+			+ JSON.stringify(this.text.tests) + "\t"
 			//+ this.tools.value.input+"\t"
 			//+ this.tools.value.id+"\t"
 		)
@@ -136,23 +137,23 @@ export default class RegExr extends EventDispatcher {
 		return this._matchList.matches;
 	}
 
-// public methods:
+	// public methods:
 	resetUnsaved() {
 		this._savedHash = this.hash;
 	}
 
-	newDoc(warn=true) {
-		this.load({flavor: this.flavor.value, expression: ".", text:"Text"}, warn);
+	newDoc(warn = true) {
+		this.load({ flavor: this.flavor.value, expression: ".", text: "Text" }, warn);
 		this.expression.selectAll();
 	}
 
-	load(state, warn=true) {
+	load(state, warn = true) {
 		if (warn === true) { warn = "You have unsaved changes. Continue without saving?"; }
 		if (warn && this.unsaved && !confirm(warn)) { return; }
 		this.state = Utils.clone(state);
 	}
 
-// private methods:
+	// private methods:
 	_initUI() {
 		// TODO: break into own Device class? Rename mobile.scss too?
 		// mobile setup
@@ -161,7 +162,7 @@ export default class RegExr extends EventDispatcher {
 			document.getElementById("viewport").setAttribute("content", "width=500, user-scalable=0");
 		}
 		this._matchList = window.matchMedia("(max-width: 900px)");
-		this._matchList.addListener((q)=>this.dispatchEvent("narrow")); // currently unused.
+		this._matchList.addListener((q) => this.dispatchEvent("narrow")); // currently unused.
 
 		// UI:
 		this.el = $.query(".container");
@@ -179,23 +180,20 @@ export default class RegExr extends EventDispatcher {
 		this.tools = new Tools($.query("> section.tools", el));
 
 		this.account = new Account();
-		this.sidebar = new Sidebar($.query(".app > .sidebar", this.el));
-		this.share = this.sidebar.share;
 
-		this.expression.on("change", ()=> this._change());
-		this.text.on("change", ()=> this._change());
-		this.text.on("modechange", ()=> this._modeChange());
-		this.flavor.on("change", ()=> this._change());
-		this.tools.on("change", ()=> this._change());
-		this.share.on("change", ()=> this._change());
+		this.expression.on("change", () => this._change());
+		this.text.on("change", () => this._change());
+		this.text.on("modechange", () => this._modeChange());
+		this.flavor.on("change", () => this._change());
+		this.tools.on("change", () => this._change());
 	}
 
 	_migrateFavorites() {
-		let ls = window.localStorage, l=ls.length;
+		let ls = window.localStorage, l = ls.length;
 		if (!l || ls.getItem("f_v3") >= "1") { return }
 		let ids = [];
-		for (let i=0; i<l; i++) {
-			let key = ls.key(i), val=ls.getItem(key);
+		for (let i = 0; i < l; i++) {
+			let key = ls.key(i), val = ls.getItem(key);
 			if (key[0] === "f" && val === "1") {
 				ids.push(key.substr(1));
 			}
@@ -207,7 +205,7 @@ export default class RegExr extends EventDispatcher {
 	_change() {
 		this.dispatchEvent("change");
 		let solver = this.flavor.solver, exp = this.expression;
-		let o = {pattern:exp.pattern, flags:exp.flags, mode:this.text.mode};
+		let o = { pattern: exp.pattern, flags: exp.flags, mode: this.text.mode };
 		if (o.mode === "tests") {
 			o.tests = this.text.tests;
 		} else {
@@ -221,7 +219,7 @@ export default class RegExr extends EventDispatcher {
 		$.toggleClass(this.docEl, "tests-mode", this.text.mode === "tests");
 		this._change();
 	}
-	
+
 	_handleResult(result) {
 		this.result = this._processResult(result);
 		this.dispatchEvent("result");
@@ -229,7 +227,7 @@ export default class RegExr extends EventDispatcher {
 
 	_processResult(result) {
 		if (result.mode === "text") {
-			result.matches && result.matches.forEach((o, i)=>o.num=i);
+			result.matches && result.matches.forEach((o, i) => o.num = i);
 		}
 		return result;
 	}
