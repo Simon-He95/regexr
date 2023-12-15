@@ -25,7 +25,7 @@ export default class Theme extends EventDispatcher {
 	constructor (el) {
 		super();
 		this.el = el;
-		this.urlTemplate = "./themes/%name%.css";
+		this.urlTemplate = "./%name%.css";
 		this.targetNode = this._node = null;
 		this._dark = false;
 		this._initUI();

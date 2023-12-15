@@ -42,25 +42,6 @@ const themes = fs.readdirSync("./dev/sass").filter(f => /colors_\w+\.scss/.test(
 const terserPlugin = terser();
 let bundleCache;
 
-const serverCopyAndWatchGlob = [
-	"index.php", "server/**",
-	"!server/**/composer.*",
-	"!server/**/*.sql",
-	"!server/**/*.md",
-	"!server/gulpfile.js",
-	"!server/Config*.php",
-	"!server/**/*package*.json",
-	"!server/{.git*,.git/**}",
-	"!server/node_modules/",
-	"!server/node_modules/**",
-];
-
-// tasks
-gulp.task("serve", () => {
-	browser({
-		server: { baseDir: "./deploy/" },
-	});
-});
 
 gulp.task("watch", () => {
 	gulp.watch("./dev/src/**/*.js", gulp.series("js", "browserreload"));
@@ -75,9 +56,6 @@ gulp.task("browserreload", (done) => {
 	done();
 });
 
-gulp.task("watch-server", () => {
-	return gulp.watch(serverCopyAndWatchGlob, gulp.series("copy-server"));
-});
 
 gulp.task("js", () => {
 	const plugins = [babelPlugin, replacePlugin];
@@ -100,7 +78,7 @@ gulp.task("js", () => {
 		bundleCache = bundle.cache;
 		return bundle.write({
 			format: "iife",
-			file: `./deploy/${js_file}`,
+			file: `./dist/${js_file}`,
 			name: "regexr",
 			sourcemap: !isProduction()
 		})
@@ -112,7 +90,8 @@ themes.forEach(theme => {
 	gulp.task(`sass-${theme}`, () => {
 		return diffTheme(theme).then(() => {
 			return gulp.src(`./assets/themes/${theme}.css`)
-				.pipe(browser.stream());
+				.pipe(browser.stream())
+				.pipe(gulp.dest("dist"))
 		})
 	});
 });
@@ -123,7 +102,7 @@ gulp.task("sass-themes", gulp.parallel(themes.map(theme => `sass-${theme}`)));
 const defaultSass = () => {
 	const str = buildSass("default")
 		.pipe(rename(css_file))
-		.pipe(gulp.dest("deploy"));
+		.pipe(gulp.dest("dist"));
 
 	return isProduction()
 		? str
@@ -144,7 +123,7 @@ gulp.task("html", () => {
 			conservativeCollapse: true,
 			removeComments: true
 		}))
-		.pipe(gulp.dest("build"));
+		.pipe(gulp.dest("dist"));
 });
 
 gulp.task("dev-html", () => {
@@ -158,15 +137,15 @@ gulp.task("dev-html", () => {
 			conservativeCollapse: true,
 			removeComments: true
 		}))
-		.pipe(gulp.dest("deploy"));
+		.pipe(gulp.dest("dist"));
 });
 
 
 gulp.task("createFileHashes", (cb) => {
-	const js_version = createFileHash(`deploy/regexr.js`);
-	const css_version = createFileHash("deploy/regexr.css");
-	js_file = `deploy/${js_version}.js`;
-	css_file = `deploy/${css_version}.css`;
+	const js_version = createFileHash(`dist/regexr.js`);
+	const css_version = createFileHash("dist/regexr.css");
+	js_file = `dist/${js_version}.js`;
+	css_file = `dist/${css_version}.css`;
 	cb();
 });
 
@@ -197,63 +176,40 @@ gulp.task("inject", () => {
 
 gulp.task("clean", () => {
 	return del([
-		"build/**",
-		"!build",
-		"!build/sitemap.txt",
-		"!build/{.git*,.git/**}",
-		"!build/v1/**"
+		"dist/**",
+		"!dist",
+		"!dist/sitemap.txt",
+		"!dist/{.git*,.git/**}",
+		"!dist/v1/**"
 	]);
 });
 
 gulp.task("copy", () => {
 	// index.html is copied in by the html task
 	return gulp.src([
-		"deploy/**",
 		"assets/**",
-		"!deploy/*.map",
-		...serverCopyAndWatchGlob
 	], {base: "./"})
-	.pipe(gulp.dest("./build/"));
-});
-
-gulp.task("copy-server", () => {
-	// index.html is copied in by the html task
-	return gulp.src(serverCopyAndWatchGlob, {base: "./"})
-	.pipe(gulp.dest("./build/"));
-});
-
-gulp.task("rename-css", () => {
-	return gulp.src("./build/deploy/regexr.css")
-		.pipe(rename(basename(css_file)))
-		.pipe(gulp.dest("./build/deploy/"));
-});
-
-gulp.task("rename-js", () => {
-	return gulp.src("./build/deploy/regexr.js")
-		.pipe(rename(basename(js_file)))
-		.pipe(gulp.dest("./build/deploy/"));
+	.pipe(gulp.dest("./dist/"));
 });
 
 gulp.task("clean-build", () => {
 	return del([
-		"./build/deploy/regexr.*",
+		"./dist/regexr.*",
 	]);
 })
 
 gulp.task("build", gulp.parallel("js", "sass"));
-gulp.task("server", gulp.series("copy-server", "watch-server"));
-gulp.task("rename", gulp.parallel("rename-css", "rename-js"));
+// gulp.task("rename", gulp.parallel("rename-css", "rename-js"));
 
 gulp.task("default",
 	gulp.series("build","dev-html",
-		gulp.parallel("serve", "watch")
 	)
 );
 
 gulp.task("deploy",
 	gulp.series(
 		cb => (process.env.NODE_ENV = "production") && cb(),
-		"clean", "build", "createFileHashes", "html", "copy", "rename", "clean-build"
+		"clean", "build", "createFileHashes", "html", "copy", "clean-build"
 	)
 );
 
