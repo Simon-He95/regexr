@@ -158,6 +158,7 @@ export default class RegExr extends EventDispatcher {
 	newDoc(warn = true) {
 		// 我希望清空编辑器中的数据初始化编辑器
 		this.expression.value = ''
+		this.text.value = ''
 	}
 
 	load(state, warn = true) {
