@@ -209,7 +209,7 @@ gulp.task("default",
 gulp.task("deploy",
 	gulp.series(
 		cb => (process.env.NODE_ENV = "production") && cb(),
-		"clean", "build", "createFileHashes", "html", "copy", "clean-build"
+		"clean", "build", "createFileHashes", "html", "copy", "clean-build",'watch'
 	)
 );
 

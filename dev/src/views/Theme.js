@@ -47,7 +47,6 @@ export default class Theme extends EventDispatcher {
 
 	_initUI() {
 		this.themeBtn = $.query(".header .button.theme", this.el);
-		this.themeBtn.addEventListener("click", (evt) => this._toggleTheme());
 	}
 
 	_load(id) {

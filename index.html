@@ -209,12 +209,7 @@
 				<li class="new">New</li>
 			</ul>
 			<ul class="etc">
-				<li class="button theme"><svg class="icon moon inline">
-						<use xlink:href="#moon">
-							<title>Dark UI</title>
-						</use>
-					</svg></li>
-				<li class="github"><a href="http://github.com/gskinner/regexr/">GitHub</a></li>
+				<li class="github"><a href="https://github.com/Simon-He95">GitHub</a></li>
 			</ul>
 		</header>
 		<div class="app">
@@ -224,6 +219,18 @@
 					<header>
 						<h1>Expression</h1>
 						<div class="controlbar">
+							<div class="button copy">
+								<svg class="icon copy">
+									<use xlink:href="#copy"></use>
+								</svg>
+								<span class="label">Copy</span>
+							</div>
+							<div class="button check" style="color:rgb(0 170 0);display: none;">
+								<svg class="icon check" >
+									<use xlink:href="#check"></use>
+								</svg>
+							</div>
+				
 							<div class="button flags">
 								<svg class="icon">
 									<use xlink:href="#flags"></use>
@@ -257,15 +264,7 @@
 					<article>
 						<article class="editor multiline">
 							<div class="pad">
-								<textarea>
-RegExr was created by gskinner.com.
-
-Edit the Expression & Text to see matches. Roll over matches or the expression for details. PCRE & JavaScript flavors of RegEx are supported. Validate your expression with Tests mode.
-
-The side bar includes a Cheatsheet, full Reference, and Help. You can also Save & Share with the Community and view patterns you create or favorite in My Patterns.
-
-Explore results with the Tools below. Replace & List output custom results. Details lists capture groups. Explain describes your expression in plain English.
-</textarea>
+								<textarea>Hi, I'm Simon.</textarea>
 							</div>
 						</article>
 						<div class="tests">
@@ -422,141 +421,7 @@ Explore results with the Tools below. Replace & List output custom results. Deta
 				</tr>
 			</table>
 		</div>
-		<div id="community" class="community">
-			<div class="actions list">
-				<div class="link row">
-					<svg class="icon link">
-						<use xlink:href="#link"></use>
-					</svg>
-					<div class="label">Load</div>
-					<div class="url">--</div>
-					<svg class="icon copy">
-						<use xlink:href="#copy">
-							<title>Copy to clipboard</title>
-						</use>
-					</svg>
-				</div>
-				<div class="rate inactive row">
-					<svg class="icon thumb">
-						<use xlink:href="#thumb"></use>
-					</svg>
-					<div class="label">Rate</div>
-					<svg class="icon rate thumbdown">
-						<use xlink:href="#thumb">
-							<title>Rate pattern</title>
-						</use>
-					</svg>
-					<span class="rating">--</span>
-					<svg class="icon rate thumbup">
-						<use xlink:href="#thumb">
-							<title>Rate pattern</title>
-						</use>
-					</svg>
-				</div>
-			</div>
-			<div class="desc"></div>
-			<div class="author"></div>
-			<hr>
-		</div>
-		<div id="share">
-			<!-- holds all the elements used in the Save & Share section -->
-			<div id="share_main">
-				<div class="signin row">
-					<svg class="icon user">
-						<use xlink:href="#user"></use>
-					</svg>
-					<div class="label signin"><a>Sign in</a> to avoid losing your patterns!</div>
-					<div class="label signout">Signed in as <b class="username">--</b></div>
-				</div>
-				<div class="save row">
-					<div class="message">Saving will create a shareable public link.</div>
-					<div class="buttons row">
-						<div class="fork button">Fork</div>
-						<div class="save button default">Save</div>
-						<div class="status"></div>
-					</div>
-				</div>
-				<div class="info">
-					<div class="info row">
-						<svg class="icon info">
-							<use xlink:href="#info"></use>
-						</svg>
-						<div class="label">Optional info</div>
-					</div>
-					<div class="inputs">
-						<input class="name" type="text" placeholder="pattern name (recommended)" maxlength="30">
-						<input class="author" type="text" placeholder="author name" maxlength="20">
-						<textarea class="description" rows="4" placeholder="description" maxlength="250"></textarea>
-						<input class="keywords" type="text" placeholder="keywords for search" maxlength="50">
-					</div>
-				</div>
-				<div class="actions list">
-					<div class="link row">
-						<svg class="icon link">
-							<use xlink:href="#link"></use>
-						</svg>
-						<div class="label">Shareable link</div>
-						<div class="url"></div>
-						<svg class="icon copy">
-							<use xlink:href="#copy">
-								<title>Copy to clipboard</title>
-							</use>
-						</svg>
-					</div>
-					<div class="private row">
-						<svg class="icon private">
-							<use xlink:href="#private"></use>
-						</svg>
-						<div class="label">Private</div>
-						<div class="status"></div>
-						<svg class="icon check">
-							<use xlink:href="#check"></use>
-						</svg>
-					</div>
-					<div class="favorites row">
-						<svg class="icon favorites">
-							<use xlink:href="#favorites"></use>
-						</svg>
-						<div class="label">Favorite</div>
-						<div class="status"></div>
-						<svg class="icon check">
-							<use xlink:href="#check"></use>
-						</svg>
-					</div>
-					<div class="community row">
-						<svg class="icon community">
-							<use xlink:href="#community"></use>
-						</svg>
-						<div class="label">Share with the Community</div>
-						<svg class="icon arrow">
-							<use xlink:href="#arrowright"></use>
-						</svg>
-					</div>
-					<div class="delete row">
-						<svg class="icon delete">
-							<use xlink:href="#delete"></use>
-						</svg>
-						<div class="label">Delete</div>
-						<div class="status"></div>
-					</div>
-				</div>
-			</div>
-			<div id="share_community"> Edit or add extra information to help people find this expression. <div class="inputs">
-					<input class="name" type="text" placeholder="pattern name (required)" maxlength="30">
-					<input class="author" type="text" placeholder="author name" maxlength="20">
-					<textarea class="description" rows="3" placeholder="description" maxlength="250"></textarea>
-					<input class="keywords" type="text" placeholder="keywords for search" maxlength="50">
-				</div>
-				<div class="buttons">
-					<div class="button cancel">Cancel</div>
-					<div class="button share default"><svg class="icon community">
-							<use xlink:href="#community"></use>
-						</svg> Share</div>
-					<div class="status"></div>
-				</div> This will share a public copy of this Expression (including Text) with the Community. <b>You will not be
-					able to edit or delete the shared copy.</b>
-			</div>
-		</div>
+
 		<div id="tests_item">
 			<header>
 				<svg class="icon fail small">

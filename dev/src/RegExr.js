@@ -30,7 +30,6 @@ import Text from "./views/Text";
 import Tools from "./views/Tools";
 import app from "./app";
 import Account from "./views/Account";
-import Theme from "./views/Theme";
 
 import Reference from "./docs/Reference";
 import reference_content from "./docs/reference_content";
@@ -49,9 +48,24 @@ export default class RegExr extends EventDispatcher {
 		this._migrateFavorites();
 		this._initUI();
 		const hEl = $.query(".header");
+		const copyBtn = $.query('.button.copy')
+		const successBtn = $.query('.button.check')
+		copyBtn.addEventListener('click', () => {
+			const text = this.expression.value
+			copyBtn.style.display = 'none'
+			successBtn.style.display = 'flex'
+			setTimeout(() => {
+				copyBtn.style.display = 'flex'
+				successBtn.style.display = 'none'
+			}, 500)
+			navigator.clipboard.writeText(text)
+			window.postMessage({
+				type: 'copy',
+				text: 'success'
+			}, '*')
+		})
 		this.hNewBtn = $.query(".new", hEl);
 		this.hNewBtn.addEventListener('click', () => app.newDoc())
-
 		this.account.value = account;
 		if (state === false) {
 			this._localInit();
@@ -93,7 +107,6 @@ export default class RegExr extends EventDispatcher {
 
 	// getter / setters:
 	get state() {
-		console.log(this.text.mode);
 		let o = {
 			expression: this.expression.value,
 			text: this.text.value,
@@ -143,8 +156,8 @@ export default class RegExr extends EventDispatcher {
 	}
 
 	newDoc(warn = true) {
-		this.load({ flavor: this.flavor.value, expression: ".", text: "Text" }, warn);
-		this.expression.selectAll();
+		// 我希望清空编辑器中的数据初始化编辑器
+		this.expression.value = ''
 	}
 
 	load(state, warn = true) {
@@ -172,10 +185,22 @@ export default class RegExr extends EventDispatcher {
 			toggle: new Tooltip($.query("#library #tooltip"), true)
 		};
 
-		this.theme = new Theme(this.el);
 
 		let el = this.docEl = $.query(".app > .doc", this.el);
 		this.expression = new Expression($.query("> section.expression", el));
+		// /123/g
+		// Expression.DEFAULT_EXPRESSION = "/([A-Z])\\w+/g";
+		// 获取当前粘贴板的内容如果有 并且是正则直接给Expression.DEFAULT_EXPRESSION 作为初始化的值，否则 textarea 作为初始值
+
+		window.navigator.clipboard.readText().then(clipboardText => {
+			if (!clipboardText)
+				return
+			if (clipboardText.match(/^\/.+[^\\]\/[a-z]*$/ig)) {
+				this.expression.value = clipboardText
+			} else {
+				this.text.value = clipboardText
+			}
+		})
 		this.text = new Text($.query("> section.text", el));
 		this.tools = new Tools($.query("> section.tools", el));
 

@@ -7391,11 +7391,6 @@ function contextMenuInGutter(cm, e) {
   return gutterEvent(cm, e, "gutterContextMenu", false)
 }
 
-function themeChanged(cm) {
-  cm.display.wrapper.className = cm.display.wrapper.className.replace(/\s*cm-s-\S+/g, "") +
-    cm.options.theme.replace(/(^|\s)\s*/g, " cm-s-")
-  clearCaches(cm)
-}
 
 var Init = {toString: function(){return "CodeMirror.Init"}}
 
@@ -7462,7 +7457,6 @@ function defineOptions(CodeMirror) {
   option("wholeLineUpdateBefore", true)
 
   option("theme", "default", function (cm) {
-    themeChanged(cm)
     guttersChanged(cm)
   }, true)
   option("keyMap", "default", function (cm, val, old) {
@@ -7590,7 +7584,6 @@ function CodeMirror(place, options) {
   var display = this.display = new Display(place, doc, input)
   display.wrapper.CodeMirror = this
   updateGutters(this)
-  themeChanged(this)
   if (options.lineWrapping)
     { this.display.wrapper.className += " CodeMirror-wrap" }
   initScrollbars(this)
