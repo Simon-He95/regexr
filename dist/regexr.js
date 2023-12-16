@@ -19681,8 +19681,8 @@ var regexr = (function () {
 
       window.navigator.clipboard.readText().then(clipboardText => {
         if (!clipboardText) return;
-        if (clipboardText.match(/^\/.+[^\\]\/[a-z]*$/ig)) {
-          this.expression.value = clipboardText;
+        if (clipboardText.trim().match(/^\/.+[^\\]\/[a-z]*$/ig)) {
+          this.expression.value = clipboardText.trim();
         } else {
           this.text.value = clipboardText;
         }
